@@ -1,0 +1,42 @@
+{
+	"chn_no" : "21",	
+	"gtype" : "20",      
+	"gtid" : "",       
+	"token" : "",	
+	"txcode" : "room002",
+	"txtime" : "",	
+	"ret_code":"200",
+	"ret_msg":"查询成功",
+    "data": {
+        "TID": "",
+        "TNAME": "标准双床房",
+        "STANDARD_TYPE": "标准间",
+        "BED_NUM":"2",
+        "CAPACITY": "2",
+        "PRICE": "389",
+        "ROOM_STYLE": "",
+        "HASWINDOW": "",
+        "MEALS": "",
+        "FLOOR": "",
+        "MAXAREA": "",
+        "MINAREA": "",
+        "BTYPE": ["大床"],
+        "OTHERFACILITIES": ["220V电压插座"],
+        "HOTEL_TYPE": "",
+        "HOTEL_ID ": "",
+        "ISSUITE": "",
+        "CANADDBED": "",
+        "NETWORK": "",
+        "NOSMOKE": "",
+        "FEEDESC": "",
+        "FOOD": "",
+        "BATHROOM": "",
+        "CANCELDESC": "",
+        "VALIDINWEEK": "",
+        "IFUSE": "",
+        "IFREMAINING": "",
+        "STATUS":"0"
+	}
+}
+
+

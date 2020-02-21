@@ -1,0 +1,33 @@
+{
+	"chn_no" : "21",	
+	"gtype" : "20",      
+	"gtid" : "",       
+	"token" : "",	
+	"txcode" : "room000",
+	"txtime" : "",	
+	"ret_code":"200",
+	"ret_msg":"查询成功",
+    "data": {
+		"TID":"",
+        "TNAME":"长隆酒店",
+        "HOTEL_TYPE":"",
+        "HOTEL_STYLE":"",
+        "AREA": "440700",
+        "ADDR": "",
+        "STARS": "",
+        "LONGITUDE": "",
+        "LATITUDE": "",
+        "SWITCHBOARD": "",
+        "CORP_GROUP": "",
+        "CORP_BRAND": "",
+        "OPENING_DATE": "",
+        "LATEST_RENOVATION": "",
+        "PRICE_TYPE": "",
+        "CONTACT_NAME": "",
+        "LANDLINE": "",
+        "MOBILE_PHONE": "",
+        "EMAIL": ""
+	}
+}
+
+
