@@ -1,7 +1,7 @@
 <template>
     <div>
         <div style="width:100%;">
-            <h2  style="width:100%;margin-left:1%">修改房型</h2>
+            <h2  style="width:100%;margin-left:1%">查询房型</h2>
         </div>
         <div style="width:100%;height:10px;background:#f2f2f2;">
         </div>
@@ -99,10 +99,10 @@
                             <el-checkbox label="拖鞋" name="type"></el-checkbox>
                         </el-checkbox-group>
                     </el-form-item>
-                    <el-form-item>
+                    <!-- <el-form-item>
                         <el-button @click="resetForm('ruleForm')">取消</el-button>
                         <el-button type="primary" @click="submitForm('ruleForm')" style="margin-left:10%">保存</el-button>
-                    </el-form-item>
+                    </el-form-item> -->
                 </el-form>
             </el-col>
         </div>
@@ -111,7 +111,7 @@
 
 <script>
   export default {
-    name:'addHouse',
+    name:'houseDetails',
     data() {
       return {
         ruleForm: {
@@ -164,40 +164,40 @@
         },
         rules: {
             TNAME: [
-                { required: true, message: '请输入类型名称', trigger: 'blur' }
+                { required: false, message: '请输入类型名称', trigger: 'blur' }
             ],
             STANDARD_TYPE: [
-                { required: true, message: '请选择标准房型', trigger: 'change' }
+                { required: false, message: '请选择标准房型', trigger: 'change' }
             ],
             BED_NUM:[
-                { required: true, message: '请输入床位数', trigger: 'blur' }
+                { required: false, message: '请输入床位数', trigger: 'blur' }
             ],
             CAPACITY:[
-                { required: true, message: '请输入可住人数', trigger: 'blur' }
+                { required: false, message: '请输入可住人数', trigger: 'blur' }
             ],
             PRICE:[
-                { required: true, message: '请输入门市价', trigger: 'blur' }
+                { required: false, message: '请输入门市价', trigger: 'blur' }
             ],
             ROOM_STYLE:[
-                { required: true, message: '请输入房型风格', trigger: 'blur' }
+                { required: false, message: '请输入房型风格', trigger: 'blur' }
             ],
             HASWINDOW:[
-                { required: true, message: '请选择窗户类型', trigger: 'change' }
+                { required: false, message: '请选择窗户类型', trigger: 'change' }
             ],
             MEALS:[
-                { required: true, message: '请选择餐食类型', trigger: 'change' }
+                { required: false, message: '请选择餐食类型', trigger: 'change' }
             ],
             FLOOR:[
-                { required: true, message: '请输入楼层类型', trigger: 'blur' }
+                { required: false, message: '请输入楼层类型', trigger: 'blur' }
             ],
             MAXAREA:[
-                { required: true, message: '请输入面积', trigger: 'blur' }
+                { required: false, message: '请输入面积', trigger: 'blur' }
             ],
             OTHERFACILITIES: [
-                { type: 'array', required: true, message: '请至少选择一个活动性质', trigger: 'change' }
+                { type: 'array', required: false, message: '请至少选择一个活动性质', trigger: 'change' }
             ],
             BTYPE: [
-                { type: 'array', required: true, message: '请至少选择一个活动性质', trigger: 'change' }
+                { type: 'array', required: false, message: '请至少选择一个活动性质', trigger: 'change' }
             ],
         },
         //测试url
@@ -230,28 +230,9 @@
             console.log(this.ruleForm)
             this.$refs[formName].validate((valid) => {
             if (valid) {
-                this.$confirm('此操作修改房间类型, 是否继续?', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    type: 'warning'
-                }).then(() => {
-                    var params = {"txcode":"room002","data":this.ruleForm};
-                    this.ajax("get",params,(res) => {
-                        console.log(res.data)
-                        if(res.data.ret_code == "200"){
-                            console.log(this.ruleForm)
-                            this.$message({
-                                type: 'success',
-                                message: '修改成功!'
-                            });     
-                        }
-                    },(err) => {console.log(err,"错误提示")},this.testURL);
-                }).catch(() => {
-                    this.$message({
-                        type: 'info',
-                        message: '已取消!'
-                    });          
-                });
+                alert('submit!');
+                var a = this.ruleForm
+                console.log(a)
             } else {
                 console.log('error submit!!');
                 return false;
@@ -264,8 +245,9 @@
             this.$refs[formName].resetFields();
         },
 
-        //获取酒店房间
+        //获取酒店房间信息
         getData(data){
+            
             var params = {"txcode":"room001","data":{"typeId":data.TID}};
             this.ajax("get",params,(res) => {
                 console.log(res.data)
@@ -277,18 +259,13 @@
                     Object.assign(newParams,oldParams,ajaxParams);
                     this.ruleForm = newParams;
                     console.log(this.ruleForm)
-                }else{
-                    this.$message({
-                        type: 'info',
-                        message: '修改取消!'
-                    });   
                 }
             },(err) => {console.log(err,"错误提示")},this.testURL);
         },
         
     },
     mounted(){
-        // console.log(this.$route.params.room)
+        console.log(this.$route.params.room)
         this.getData(this.$route.params.room)
     }
   }

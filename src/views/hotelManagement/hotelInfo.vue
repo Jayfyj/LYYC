@@ -210,25 +210,48 @@
         submitForm(formName) {
             console.log(this.ruleForm)
             this.$refs[formName].validate((valid) => {
-            if (valid) {
-                alert('submit!');
-                var a = this.ruleForm
-                console.log(a)
-            } else {
-                console.log('error submit!!');
-                return false;
-            }
+                if (valid) {
+                    this.$confirm('此操作将修改酒店信息, 是否继续?', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning'
+                    }).then(() => {
+                        var params = {"txcode":"hotel002","data":this.ruleForm};
+                        this.ajax("get",params,(res) => {
+                            if(res.data.ret_code == "200"){
+                                this.$message({
+                                    type: 'success',
+                                    message: '修改成功!'
+                                });       
+                            }else{
+                                this.$message({
+                                    ype: 'info',
+                                    message: '修改失败!'
+                                });    
+                            }
+                        },(err) => {console.log(err,"错误提示")},this.testURL);
+                    }).catch(() => {
+                        this.$message({
+                            type: 'info',
+                            message: '已取消!'
+                        });          
+                    });
+                }else {
+                    console.log('error submit!!');
+                    return false;
+                }
             });
         },
+
 
         //取消
         resetForm(formName) {
             this.$refs[formName].resetFields();
         },
 
-         //获取酒店信息
-        getData(data){
-            var params = {"txcode":"hotel001","data":data};
+        //获取酒店信息
+        getData(){
+            var params = {"txcode":"hotel001"};
             this.ajax("get",params,(res) => {
                 console.log(res.data)
                 if(res.data.ret_code == "200"){
@@ -240,6 +263,11 @@
                     this.ruleForm = newParams;
                     console.log(this.ruleForm)
                     this.tranfromCNArea()
+                }else{
+                    this.$message({
+                        ype: 'info',
+                        message: '  请求失败!'
+                    });    
                 }
             },(err) => {console.log(err,"错误提示")},this.testURL);
         },
@@ -309,9 +337,7 @@
         
     },
     mounted(){
-        this.getAreaData()
-        
-        
+        this.getAreaData();
     }
   }
 </script>

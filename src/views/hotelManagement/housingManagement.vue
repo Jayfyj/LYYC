@@ -29,16 +29,17 @@
 			</el-table-column>
 			<el-table-column prop="BED_NUM" label="床位数" width="100"   align='center'>
 			</el-table-column>
-			<el-table-column prop="CAPACITY" label="可住人数" min-width="120"   align='center'>
+			<el-table-column prop="CAPACITY" label="可住人数" min-width="100"   align='center'>
 			</el-table-column>
-            <el-table-column prop="BTYPE" label="床型" min-width="120"   align='center'>
+            <el-table-column prop="BTYPE" label="床型" min-width="100"   align='center'>
 			</el-table-column>
             <el-table-column prop="CNStatus" label="状态" min-width="100"  align='center'>
 			</el-table-column>
-			<el-table-column label="操作" width="280"  align='center' > 
+			<el-table-column label="操作" width="360"  align='center' > 
 				<template slot-scope="scope">
 					<el-button size="small" @click="sellOut(scope.$index, scope.row)">售罄</el-button>
                     <el-button size="small" @click="banSell(scope.$index, scope.row)">禁售</el-button>
+                    <el-button size="small" @click="handleDetail(scope.$index, scope.row)">详情</el-button>
                     <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
 					<el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
 				</template>
@@ -129,6 +130,7 @@ export default {
 
         //获取酒店房间信息
         getData(){
+            
             this.listLoading = true;
             var data = {"hotelId":"575346343687","pageSize":this.pageInfo.pageSize,"pageNum":this.pageInfo.page}
             var params = {"txcode":"room000","data":data};
@@ -139,6 +141,11 @@ export default {
                     this.tranfromCNStatus(this.rooms);
                     this.pageInfo.total = Number(res.data.data.totalNum);
                     this.listLoading = false;
+                }else{
+                    this.$message({
+                        ype: 'info',
+                        message: '  请求失败!'
+                    });    
                 }
             },(err) => {console.log(err,"错误提示")},this.testURL);
         },
@@ -165,12 +172,18 @@ export default {
             row.CNStatus = "售罄";
         },
 
-        //售罄
+        //禁售
         banSell(index, row){
             console.log(row)
             row.STATUS = "1";
             row.CNStatus = "禁售";
         },
+        
+        //查看详情
+        handleDetail(index, row){
+            this.$router.push({name:"HouseDetails",params:{'room':row}});
+        },
+
 
         //显示编辑界面
         handleEdit(index, row) {

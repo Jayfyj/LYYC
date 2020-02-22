@@ -1,0 +1,39 @@
+{
+	"chn_no" : "21",
+	"gtype" : "20", 
+	"gtid" : "",   
+	"token" : "",
+	"txcode" : "order000",
+	"txtime" : "",	
+	"ret_code":"200", 
+	"ret_msg":"查询成功", 
+    "data": {
+			"TID": "000000012312312301",
+			"SYSTYPE": "1",
+			"HOTELID": "1",
+			"JINGQUID": "123",
+			"MEMBERID": "000000012312312301",
+            "CTPHONE": "12345678900",
+			"IDNO": "123456789987654321",
+			"EMAIL": "123456@qq.com",
+			"TYPEID": "t120",
+			"ROOMNUM": "2",
+			"BOSDAY": "2020-02-12",
+			"BOEDAY": "2020-02-13",
+			"ARRIVETIME": "2020-02-13 08:08:08",
+			"PSTATE": "1",
+			"PTYPE": "1",
+			"TOTALCOST": "800",
+			"TOTALPRICE": "1000",
+			"DISCOUNT": "200",
+			"RMONEY": "900",
+			"RFEE": "100",
+			"RSTATE": "2",
+			"STATE": "0",
+			"CFUSER": "admin",
+			"CFTIME": "2020-02-13 08:08:08"
+	}
+}
+
+
+

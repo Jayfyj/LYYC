@@ -228,13 +228,24 @@
             this.ruleForm.BTYPE = crr;
             this.ruleForm.choBTYPE = drr;
             this.$refs[formName].validate((valid) => {
-            if (valid) {
-                alert('submit!');
-                this.getData(this.ruleForm)
-            } else {
-                console.log('error submit!!');
-                return false;
-            }
+                if (valid) {
+                    // alert('submit!');
+                    this.$confirm('此操作添加房间类型, 是否继续?', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning'
+                    }).then(() => {
+                        this.getData(this.ruleForm);
+                    }).catch(() => {
+                        this.$message({
+                            type: 'info',
+                            message: '已取消!'
+                        });          
+                    });
+                } else {
+                    console.log('error submit!!');
+                    return false;
+                }
             });
         },
 
@@ -243,13 +254,22 @@
             this.$refs[formName].resetFields();
         },
 
-         //获取酒店房间信息
+        //添加酒店房间信息
         getData(data){
             var params = {"txcode":"room002","data":data};
             this.ajax("get",params,(res) => {
                 console.log(res.data)
                 if(res.data.ret_code == "200"){
                     console.log(this.ruleForm)
+                    this.$message({
+                        type: 'success',
+                        message: '成功!'
+                    });     
+                }else{
+                    this.$message({
+                        type: 'info',
+                        message: '添加失败!'
+                    });   
                 }
             },(err) => {console.log(err,"错误提示")},this.testURL);
         },
