@@ -45,11 +45,13 @@ router.beforeEach((to, from, next) => {
 //   console.log(from)
 //   console.log(to)
   if (to.path == '/login') {
-    // sessionStorage.removeItem('user');
-    localStorage.removeItem('user');
-    localStorage.removeItem("innertime");
+    sessionStorage.removeItem('user');
+    sessionStorage.removeItem("innertime");
+    // localStorage.removeItem('user');
+    // localStorage.removeItem("innertime");
   }
-  let user = localStorage.getItem('user');
+//let user = localStorage.getItem('user');
+  let user = sessionStorage.getItem('user');
   console.log(user)
 //   console.log(JSON.parse(sessionStorage.getItem('user')))
 //   console.log( to.path)

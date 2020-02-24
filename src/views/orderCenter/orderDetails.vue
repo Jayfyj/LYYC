@@ -2,17 +2,49 @@
     <div>
         <div style="width:100%;" class="title">
             <h2  style="width:100%;margin-left:1%">订单详情</h2>
-            <div>
+            <!-- <div>
                 <el-button @click="goback()" style="float:right">返回</el-button>
 			    <el-button type="primary" @click="submit()" style="float:right">确认</el-button>
-			</div>
+			</div> -->
         </div>
         <div style="width:100%;height:10px;background:#f2f2f2;">
         </div>
         <div class="orderNewFrom">
             <el-col :span="24" style="display:flex;flex-warp:warp;flex-wrap: wrap">
+                <!-- 订单 -->
+                <h3  style="width:100%;margin-left:1%">订单状态</h3>
                 <div class="ruleItemWrap">
-                    <!-- 酒店 -->
+                    <div class="ruleItem" v-if="ruleForm.STATE">
+                        <div>
+                            <i class="el-icon-setting"></i>
+                            <span>订单状态：</span>
+                        </div>
+                        <div>
+                            <span>{{ruleForm.CNSTATE}}</span>
+                        </div>
+                    </div>
+                    <div class="ruleItem" v-if="ruleForm.CFUSER">
+                        <div>
+                            <i class="el-icon-setting"></i>
+                            <span>确认人员：</span>
+                        </div>
+                        <div>
+                            <span>{{ruleForm.CFUSER}}</span>
+                        </div>
+                    </div>
+                    <div class="ruleItem" v-if="ruleForm.CFTIME">
+                        <div>
+                            <i class="el-icon-setting"></i>
+                            <span>确认时间：</span>
+                        </div>
+                        <div>
+                            <span>{{ruleForm.CFTIME}}</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- 商品信息 -->
+                <h3  style="width:100%;margin-left:1%">商品信息</h3>
+                <div class="ruleItemWrap">
                     <div class="ruleItem" v-if="ruleForm.TID">
                         <div>
                             <i class="el-icon-setting"></i>
@@ -64,6 +96,15 @@
                             <span>{{ruleForm.TYPEID}}</span>
                         </div>
                     </div>
+                     <div class="ruleItem" v-if="ruleForm.TYPENAME">
+                        <div>
+                           <i class="el-icon-setting"></i>
+                            <span>预定房型：</span>
+                        </div>
+                         <div>
+                            <span>{{ruleForm.TYPENAME}}</span>
+                        </div>
+                    </div>
                     <div class="ruleItem" v-if="ruleForm.ROOMNUM">
                         <div>
                             <i class="el-icon-setting"></i>
@@ -104,6 +145,7 @@
                         </div>
                     </div>
                 </div>
+                <h3  style="width:100%;margin-left:1%">支付类型</h3>
                 <!-- 支付类型 -->
                 <div class="ruleItemWrap">
                     <div class="ruleItem" v-if="ruleForm.PSTATE">
@@ -185,6 +227,7 @@
                         </div>
                     </div>
                 </div>
+                <h3  style="width:100%;margin-left:1%">个人信息</h3>
                 <!-- 个人信息1 -->
                 <div class="ruleItemWrap">
                     <div class="ruleItem" v-if="ruleForm.MEMBERID">
@@ -227,36 +270,6 @@
                         </div>
                     </div>
                 </div>
-                 <!-- 订单 -->
-                <div class="ruleItemWrap">
-                    <div class="ruleItem" v-if="ruleForm.STATE">
-                        <div>
-                            <i class="el-icon-setting"></i>
-                            <span>订单状态：</span>
-                        </div>
-                        <div>
-                            <span>{{ruleForm.CNSTATE}}</span>
-                        </div>
-                    </div>
-                    <div class="ruleItem" v-if="ruleForm.CFUSER">
-                        <div>
-                            <i class="el-icon-setting"></i>
-                            <span>确认人员：</span>
-                        </div>
-                        <div>
-                            <span>{{ruleForm.CFUSER}}</span>
-                        </div>
-                    </div>
-                    <div class="ruleItem" v-if="ruleForm.CFTIME">
-                        <div>
-                            <i class="el-icon-setting"></i>
-                            <span>确认时间：</span>
-                        </div>
-                        <div>
-                            <span>{{ruleForm.CFTIME}}</span>
-                        </div>
-                    </div>
-                </div>
             </el-col>
         </div>
     </div>
@@ -277,6 +290,7 @@
             "IDNO": "",//身份证号码
             "EMAIL": "",//邮箱地址
             "TYPEID": "",//预定房型ID
+            "TYPENAME":"",//预定房型ID
             "ROOMNUM": "",//预定房间数
             "BOSDAY": "",//预定开始时间
             "BOEDAY": "",//预定结束时间
@@ -388,7 +402,7 @@
         },
 
         //订单状态转化
-        orderSTATECNStatus(obj){
+        ordeRSTATECNStatus(obj){
             for(var key in this.STATECNStatus){
                 if(obj.STATE == key){
                     obj.CNSTATE = this.STATECNStatus[key];
@@ -397,42 +411,54 @@
             }
         },
 
-        //提交
-        submit() {
-            for(var delKey in this.delAttr){
-               delete this.ruleForm[delKey];
-            }
-            this.$confirm('此操作确定订单, 是否继续?', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
-            }).then(() => {
-                var params = {"txcode":"order003","data":this.ruleForm};
-                this.ajax("get",params,(res) => {
-                    console.log(res.data)
-                    if(res.data.ret_code == "200"){
-                        this.$message({
-                            type: 'success',
-                            message: '确认成功!'
-                        });     
-                    }else{
-                        this.$message({
-                            type: 'info',
-                            message: '确认失败!'
-                        });   
-                    }
-                },(err) => {console.log(err,"错误提示")},this.testURL);
-            }).catch(() => {
-                this.$message({
-                    type: 'info',
-                    message: '已取消!'
-                });          
-            });
-        },
-        //返回
-        goback(){
-            this.$router.go(-1);
-        },
+        // //提交
+        // submit() {
+        //     // for(var delKey in this.delAttr){
+        //     //    delete this.ruleForm[delKey];
+        //     // }
+        //     this.$confirm('此操作确定订单, 是否继续?', '提示', {
+        //         confirmButtonText: '确定',
+        //         cancelButtonText: '取消',
+        //         type: 'warning'
+        //     }).then(() => {
+        //         var curtime = this.datetime()
+        //         // console.log(curtime)
+        //         var data = {
+        //             "TID":this.ruleForm.TID,
+        //             "PSTATE": this.ruleForm.PSTATE,
+        //             "RMONEY":this.ruleForm.RMONEY,
+        //             "RFEE":this.ruleForm.RFEE,
+        //             "RSTATE":this.ruleForm.RSTATE,
+        //             "STATE":this.ruleForm.STATE,
+        //             "CFTIME":curtime,
+        //         }
+        //         // console.log(data)
+        //         var params = {"txcode":"order003","data":data};
+        //         this.ajax("get",params,(res) => {
+        //             console.log(res.data)
+        //             if(res.data.ret_code == "200"){
+        //                 this.$message({
+        //                     type: 'success',
+        //                     message: '确认成功!'
+        //                 });     
+        //             }else{
+        //                 this.$message({
+        //                     type: 'info',
+        //                     message: '确认失败!'
+        //                 });   
+        //             }
+        //         },(err) => {console.log(err,"错误提示")},this.testURL);
+        //     }).catch(() => {
+        //         this.$message({
+        //             type: 'info',
+        //             message: '已取消!'
+        //         });          
+        //     });
+        // },
+        // //返回
+        // goback(){
+        //     this.$router.go(-1);
+        // },
 
 
         //获取酒店房间信息
@@ -452,7 +478,7 @@
                     this.orderPSTATECNStatus(this.ruleForm);
                     this.orderPTYPECNStatus(this.ruleForm);
                     this.orderRSTATECNStatus(this.ruleForm);
-                    this.orderSTATECNStatus(this.ruleForm);
+                    this.ordeRSTATECNStatus(this.ruleForm);
                     // console.log(this.ruleForm)
                 }
             },(err) => {console.log(err,"错误提示")},this.testURL);
@@ -462,6 +488,8 @@
     mounted(){
         console.log(this.$route.params.order)
         this.getData(this.$route.params.order)
+        // var curtime = this.datetime()
+        // console.log(curtime)
     }
   }
 </script>

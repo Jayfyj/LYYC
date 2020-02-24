@@ -139,14 +139,14 @@ export default {
     },
     mounted() {
         console.log(document.getElementsByClassName("el-menu-vertical-demo"))
-        var user = localStorage.getItem('user');
+        // var user = localStorage.getItem('user');
+        var user = sessionStorage.getItem('user');
         if (user) {
             console.log(user)
             // user = JSON.parse(user);
             this.sysUserName = user || '';
             // this.sysUserAvatar = user.avatar || '';
         }
-
     },
     
     components: {

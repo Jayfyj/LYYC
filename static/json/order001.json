@@ -9,7 +9,8 @@
 	"ret_msg":"查询成功", 
     "data": {
 			"TID": "000000012312312301",
-			"SYSTYPE": "1",
+            "SYSTYPE": "1",
+            "TYPENAME":"标准房",
 			"HOTELID": "1",
 			"JINGQUID": "123",
 			"MEMBERID": "000000012312312301",

@@ -68,7 +68,7 @@
                     <!-- 床型 -->
                     <el-form-item label="床型" prop="BTYPE" style="width:100%">
                         <el-checkbox-group v-model="ruleForm.BTYPE">
-                            <div v-for="(item,index) in  ruleForm.bedType" :key= 'index' > 
+                            <div v-for="(item,index) in  ruleForm.bedtype" :key= 'index' > 
                                 <el-checkbox :label="item.name"></el-checkbox>
                                 <el-select v-model="item.nameType" placeholder="请选择内容" auto-complete="off" style="width:25%">
                                     <el-option label="大床" value="大床"></el-option>
@@ -142,7 +142,7 @@
             "VALIDINWEEK": "",//有效星期
             "IFUSE": "",//是否启用
             "IFREMAINING": "",//是否有余量
-            "bedType":[{
+            "bedtype":[{
                 "name":"大床",
                 "nameType":"大床",
                 "many":"1",
@@ -205,10 +205,18 @@
       };
     },
     methods: {
+        //大写转化小写
+        UpperToLower(obj){
+            var newobj = {};
+            for(var key in obj){
+                newobj[key.toLowerCase()] = obj[key]
+            }
+            return newobj
+        },
         //提交
         submitForm(formName) {
           
-            var arr  = this.ruleForm.bedType;
+            var arr  = this.ruleForm.bedtype;
             var brr = this.ruleForm.BTYPE;
             var crr = []
             var drr = []
@@ -235,7 +243,9 @@
                         cancelButtonText: '取消',
                         type: 'warning'
                     }).then(() => {
-                        this.getData(this.ruleForm);
+                        var data = "";
+                        data = this.UpperToLower(this.ruleForm);
+                        this.getData(data);
                     }).catch(() => {
                         this.$message({
                             type: 'info',

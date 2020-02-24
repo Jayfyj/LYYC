@@ -119,9 +119,10 @@
             var params = {"txcode":"room000","data":data};
             this.ajax("get",params,(res) => {
                 this.logining = false;
-                localStorage.setItem('user',this.ruleForm.account);
+                // localStorage.setItem('user',this.ruleForm.account);
+                sessionStorage.setItem('user',this.ruleForm.account);
                 this.$router.push('/main')
-                // sessionStorage.setItem('user',that.ruleForm.account);
+                
             },(err) => {console.log(err,"错误提示")},this.testURL);
         },
     },

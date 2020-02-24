@@ -3,12 +3,12 @@
 		<!--工具条-->
 		<el-col :span="24" style="padding:10px 10px 0;">
 			<el-form :inline="true" :model="filters">
-				<el-form-item>
+				<!-- <el-form-item>
 					<el-input v-model="filters.name" placeholder="姓名"></el-input>
 				</el-form-item>
 				<el-form-item>
 					<el-button type="primary" v-on:click="getData">查询</el-button>
-				</el-form-item>
+				</el-form-item> -->
 				<el-form-item>
 					<el-button type="primary" @click="handleAdd">新增</el-button>
 				</el-form-item>
@@ -35,11 +35,10 @@
 			</el-table-column>
             <el-table-column prop="CNStatus" label="状态" min-width="100"  align='center'>
 			</el-table-column>
-			<el-table-column label="操作" width="360"  align='center' > 
+			<el-table-column label="操作" width="300"  align='center' > 
 				<template slot-scope="scope">
 					<el-button size="small" @click="sellOut(scope.$index, scope.row)">售罄</el-button>
                     <el-button size="small" @click="banSell(scope.$index, scope.row)">禁售</el-button>
-                    <el-button size="small" @click="handleDetail(scope.$index, scope.row)">详情</el-button>
                     <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
 					<el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
 				</template>
@@ -179,12 +178,6 @@ export default {
             row.CNStatus = "禁售";
         },
         
-        //查看详情
-        handleDetail(index, row){
-            this.$router.push({name:"HouseDetails",params:{'room':row}});
-        },
-
-
         //显示编辑界面
         handleEdit(index, row) {
             this.$router.push({name:"EditHouse",params:{'room':row}});

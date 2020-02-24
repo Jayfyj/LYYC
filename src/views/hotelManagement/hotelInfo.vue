@@ -1,7 +1,7 @@
 <template>
     <div>
         <div style="width:100%;">
-            <h2  style="width:100%;margin-left:1%">修改酒店信息</h2>
+            <h2  style="width:100%;margin-left:1%">酒店信息（可修改）</h2>
         </div>
         <div style="width:100%;height:10px;background:#f2f2f2;">
         </div>
@@ -206,9 +206,19 @@
       };
     },
     methods: {
+        //大写转化小写
+        UpperToLower(obj){
+            var newobj = {};
+            for(var key in obj){
+                newobj[key.toLowerCase()] = obj[key]
+            }
+            return newobj
+        },
+
+
         //提交
         submitForm(formName) {
-            console.log(this.ruleForm)
+            // console.log(this.ruleForm)
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     this.$confirm('此操作将修改酒店信息, 是否继续?', '提示', {
@@ -216,7 +226,9 @@
                         cancelButtonText: '取消',
                         type: 'warning'
                     }).then(() => {
-                        var params = {"txcode":"hotel002","data":this.ruleForm};
+                        var data = "";
+                        data = this.UpperToLower(this.ruleForm);
+                        var params = {"txcode":"hotel002","data":data};
                         this.ajax("get",params,(res) => {
                             if(res.data.ret_code == "200"){
                                 this.$message({
@@ -261,7 +273,7 @@
                     //合并
                     Object.assign(newParams,oldParams,ajaxParams);
                     this.ruleForm = newParams;
-                    console.log(this.ruleForm)
+                    // console.log(this.ruleForm)
                     this.tranfromCNArea()
                 }else{
                     this.$message({

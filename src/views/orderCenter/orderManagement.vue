@@ -4,13 +4,27 @@
 		<el-col :span="24" style="padding:10px 10px 0;">
 			<el-form :inline="true">
 				<el-form-item>
-					<el-input v-model="queryMap.SYSTYPE" placeholder="请输入来源渠道"></el-input>
+					<el-select v-model="queryMap.systype" placeholder="请选择来源渠道" auto-complete="off">
+                        <el-option v-for="(item,index) in qSYSTYPE"  :label="item.label" :value="item.value" :key="index"></el-option>
+                    </el-select>
 				</el-form-item>
                 <el-form-item>
-					<el-input v-model="queryMap.TYPEID" placeholder="请输入房型类型"></el-input>
+					<el-select v-model="queryMap.pstate" placeholder="请选择支付状态" auto-complete="off">
+                        <el-option v-for="(item,index) in qPSTATE"  :label="item.label" :value="item.value" :key="index"></el-option>
+                    </el-select>
 				</el-form-item>
                 <el-form-item>
-					<el-input v-model="queryMap.STATE" placeholder="请输入订单状态"></el-input>
+					<el-select v-model="queryMap.rstate" placeholder="请选择退款状态" auto-complete="off">
+                        <el-option v-for="(item,index) in qRSTATE"  :label="item.label" :value="item.value" :key="index"></el-option>
+                    </el-select>
+				</el-form-item>
+                 <el-form-item>
+					<el-select v-model="queryMap.state" placeholder="请选择订单状态" auto-complete="off">
+                        <el-option v-for="(item,index) in qSTATE"  :label="item.label" :value="item.value" :key="index"></el-option>
+                    </el-select>
+				</el-form-item>
+                <el-form-item>
+					<el-input v-model="queryMap.typename" placeholder="请输入房型类型"></el-input>
 				</el-form-item>
                 <el-form-item>
 					<el-date-picker
@@ -20,8 +34,7 @@
                         unlink-panels
                         @change = "changeDate"
                         range-separator="至"
-                        start-placeholder="开始日期"
-                        end-placeholder="结束日期"
+                        placeholder="请输入日期"
                         :picker-options="pickerOptions">
                     </el-date-picker>
 				</el-form-item>
@@ -40,11 +53,11 @@
 			</el-table-column> -->
 			<!-- <el-table-column type="index" width="60"  align='center'>
 			</el-table-column> -->
-			<el-table-column prop="TID" label="订单号" width="180"  align='center'>
+			<el-table-column prop="TID" label="订单ID" width="180"  align='center'>
 			</el-table-column>
             <el-table-column prop="SYSTYPE" label="来源渠道" width="100"  align='center'>
 			</el-table-column>
-			<el-table-column prop="TYPEID" label="房型" width="120"   align='center'>
+			<el-table-column prop="TYPENAME" label="房型" width="120"   align='center'>
 			</el-table-column>
 			<el-table-column prop="ROOMNUM" label="间数" width="80"   align='center'>
 			</el-table-column>
@@ -60,9 +73,10 @@
 			</el-table-column>
             <el-table-column prop="CNStatus" label="状态" min-width="140"  align='center'>
 			</el-table-column>
-			<el-table-column label="操作" width="150"  align='center' > 
+			<el-table-column label="操作" width="200"  align='center' > 
 				<template slot-scope="scope">
                     <el-button size="small" @click="handleDetail(scope.$index, scope.row)">详情</el-button>
+                    <el-button type="primary" size="small" v-if="scope.row.state =='-1'" @click="handleSubmit(scope.$index, scope.row)">确认</el-button>
 					<el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
 				</template>
 			</el-table-column>
@@ -122,9 +136,9 @@ export default {
             },
             //时间选择器时间
             timeValue: '', 
-
+            ruleForm:{},
             orders: [],
-            type:[],
+            // type:[],
             pageInfo:{
                 total: 2,
                 page: 1,
@@ -146,15 +160,55 @@ export default {
                 "1":"订单交易成功：可用",
                 "2":"订单已关闭",
             },
-          
+
+            //来源渠道选择
+            qSYSTYPE:[
+                {"value":"1","label":"网上售票"},
+                {"value":"21","label":"微信"},
+                {"value":"22","label":"微信小程序"},
+                {"value":"23","label":"支付宝"},
+                {"value":"24","label":"H5"},
+                {"value":"26","label":"龙支付app"},
+                {"value":"3","label":"代售"},
+                {"value":"4","label":"预定"},
+                {"value":"5","label":"期票销售"},
+                {"value":"6","label":"电商"}
+            ],
+            //支付状态选择
+            qPSTATE:[
+                {"value":"0","label":"未支付"},
+                {"value":"1","label":"用户已点击进行支付按钮"},
+                {"value":"2","label":"等待银行确认"},
+                {"value":"100","label":"已支付"}
+            ],
+            //退款状态选择
+            qRSTATE:[
+                {"value":"0","label":"申请中"},
+                {"value":"1","label":"已进行退款"},
+                {"value":"2","label":"审核不通过(不退款)"},
+                {"value":"3","label":"审核通过"},
+                {"value":"4","label":"第三方待退款"},
+                {"value":"5","label":"退款失败"},
+                {"value":"-10","label":"等待处理"}
+            ],
+            //订单状态选择
+            qSTATE:[
+                {"value":"-1","label":"等待商家确认"},
+                {"value":"0","label":"订单提交成功：不可用"},
+                {"value":"1","label":"订单交易成功：可用"},
+                {"value":"2","label":"订单已关闭"},
+               
+            ],
+
+
             queryMap :{	//查询条件
-                "SYSTYPE":"",	//来源渠道：1、网上售票 2、手机(21:微信、22：微信小程序、23：支付宝、24：H5、26：龙支付app) 3、代售  4、预定  5、期票销售  6、电商
-                "TYPEID":""	,//预定房型
-                "BOSDAY":""	,//预定开始时间
-                "BOEDAY":""	,//预定结束时间
-                "PSTATE":""	,//支付状态：0：未支付   1：用户已点击进行支付按钮      2：等待银行确认     100：已支付
-                "RSTATE":""	,//退款状态：0：申请中  1：已进行退款 2：审核不通过(不退款)   3：审核通过 4、第三方待退款  5:退款失败  -10:等待处理
-                "STATE":""	//订单状态：-1：  等待商家确认0：订单提交成功：不可用 1： 订单交易成功：可用  2：订单已关闭
+                "systype":"",	//来源渠道：1、网上售票 2、手机(21:微信、22：微信小程序、23：支付宝、24：H5、26：龙支付app) 3、代售  4、预定  5、期票销售  6、电商
+                "typename":""	,//预定房型
+                "bosday":""	,//预定开始时间
+                "boeday":""	,//预定结束时间
+                "pstate":""	,//支付状态：0：未支付   1：用户已点击进行支付按钮      2：等待银行确认     100：已支付
+                "rstate":""	,//退款状态：0：申请中  1：已进行退款 2：审核不通过(不退款)   3：审核通过 4、第三方待退款  5:退款失败  -10:等待处理
+                "state":""	//订单状态：-1：  等待商家确认0：订单提交成功：不可用 1： 订单交易成功：可用  2：订单已关闭
             }
                 
             
@@ -171,6 +225,7 @@ export default {
                 }
             }
         },
+
         //分页大小切换
         handleSizeChange(val) {
             console.log(val)
@@ -197,16 +252,16 @@ export default {
             sm = sm < 10 ? '0' + sm : sm;  
             var sd = start.getDate();  
             sd = sd < 10 ? ('0' + sd) : sd;
-            this.queryMap.BOSDAY = start.getFullYear() + '-' + sm + '-' + sd;
-            console.log(this.queryMap.BOSDAY)
+            this.queryMap.bosday = start.getFullYear() + '-' + sm + '-' + sd;
+            console.log(this.queryMap.bosday)
 
             var end = new Date(this.timeValue[1]); 
             var em = end.getMonth() + 1;  
             em = em < 10 ? '0' + em : em;  
             var ed = end.getDate();  
             ed = ed < 10 ? ('0' + ed) : ed;
-            this.queryMap.BOEDAY = start.getFullYear() + '-' + em + '-' + ed;
-            console.log(this.queryMap.BOEDAY)
+            this.queryMap.boeday = start.getFullYear() + '-' + em + '-' + ed;
+            console.log(this.queryMap.boeday)
         },
 
         //获取酒店房间信息
@@ -251,6 +306,53 @@ export default {
         handleDetail(index, row){
             this.$router.push({name:"OrderDetails",params:{'order':row}});
         },
+
+
+        //确认按钮
+        handleSubmit(index, row) {
+            this.ruleForm = row;
+            this.$confirm('此操作确定订单, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                var curtime = this.datetime()
+                console.log(curtime)
+                var data = {
+                    "tid":this.ruleForm.TID,
+                    "pstate": this.ruleForm.PSTATE,
+                    "rmoney":this.ruleForm.RMONEY,
+                    "free":this.ruleForm.FREE,
+                    "rstate":this.ruleForm.RSTATE,
+                    "state":this.ruleForm.STATE,
+                    "cftime":curtime,
+                }
+                // console.log(data)
+                var params = {"txcode":"order003","data":data};
+                this.ajax("get",params,(res) => {
+                    console.log(res.data)
+                    if(res.data.ret_code == "200"){
+                        this.$message({
+                            type: 'success',
+                            message: '确认成功!'
+                        });
+                        this.getData()     
+                    }else{
+                        this.$message({
+                            type: 'info',
+                            message: '确认失败!'
+                        });   
+                    }
+                },(err) => {console.log(err,"错误提示")},this.testURL);
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消!'
+                });          
+            });
+        },
+
+
 
 
         selsChange: function (sels) {

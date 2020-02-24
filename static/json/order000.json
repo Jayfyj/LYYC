@@ -9,7 +9,8 @@
 	"ret_msg":"查询成功", 
     "data": {
 		"list":[{
-			"TID": "000000012312312301",
+            "TID": "000000012312312301",
+            "TYPENAME":"标准房",
 			"SYSTYPE": "网上预订",
 			"HOTELID": "1",
 			"JINGQUID": "",

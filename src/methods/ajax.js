@@ -15,13 +15,20 @@ var ajax = function (type,params,RES,ERR,url) {
     url = url;
   }else{
     //同一入口
-    url = "../B2CMainPlat_13_CGH";
+    url = "";
   }
-  if(localStorage.getItem("gtid")==null || localStorage.getItem("gtid")== "undefined" || localStorage.getItem("gtid")== undefined){
-    localStorage.setItem("gtid","")
+//   if(localStorage.getItem("gtid")==null || localStorage.getItem("gtid")== "undefined" || localStorage.getItem("gtid")== undefined){
+//     localStorage.setItem("gtid","")
+//   }
+//   if(localStorage.getItem("token")==null || localStorage.getItem("token") == "undefined" || localStorage.getItem("token") == undefined){
+//     localStorage.setItem("token","")
+//   }
+
+  if(sessionStorage.getItem("gtid")==null || sessionStorage.getItem("gtid")== "undefined" || sessionStorage.getItem("gtid")== undefined){
+    sessionStorage.setItem("gtid","")
   }
-  if(localStorage.getItem("token")==null || localStorage.getItem("token") == "undefined" || localStorage.getItem("token") == undefined){
-    localStorage.setItem("token","")
+  if(sessionStorage.getItem("token")==null || sessionStorage.getItem("token") == "undefined" || sessionStorage.getItem("token") == undefined){
+    sessionStorage.setItem("token","")
   }
 
   var txttime =  this.datetime()
@@ -30,8 +37,8 @@ var ajax = function (type,params,RES,ERR,url) {
   var origin = {
     "chn_no":"21",  //渠道号
     "gtype":"20",  // 单位类型
-    "gtid": localStorage.getItem("gtid"),     //单位id，用户id
-    "token":localStorage.getItem("token"),    //访问凭证
+    "gtid": sessionStorage.getItem("gtid"),     //单位id，用户id
+    "token":sessionStorage.getItem("token"),    //访问凭证
     "txtime":txttime    //交易时间
   }
   var newParams ={}
