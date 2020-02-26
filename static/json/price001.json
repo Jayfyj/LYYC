@@ -1,0 +1,28 @@
+{
+	"chn_no" : "21",	
+	"gtype" : "20",     
+	"gtid" : "",    
+	"token" : "",	
+	"txcode" : "price001",
+	"txtime" : "",	
+	"ret_code":"200", 
+	"ret_msg":"查询成功",
+    "data": {
+        "list":[
+            {
+                "DATE":"2020-02-18",
+                "PRICE":"",		
+                "COST":"",
+                "PRICESHOW":""
+            },
+            {
+                "DATE":"2020-02-25",
+                "PRICE":"",		
+                "COST":"",
+                "PRICESHOW":""
+            }
+        ]
+	}
+}
+
+

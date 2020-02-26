@@ -3,7 +3,14 @@
         <ul>
             <li class="tags-li" v-for="(item,index) in tagsList" :class="{'active': isActive(item.path)}" :key="index">
                 <router-link :to="item.path" class="tags-li-title">
-                    {{item.name=="EditHouse"?'修改房型':item.name=="HouseDetails"?"查询房型":item.name=="OrderDetails"?"订单详情":item.name}}
+                    {{
+                      item.name=="EditHouse"?'修改房型':
+                      item.name=="HouseDetails"?"查询房型":
+                      item.name=="OrderDetails"?"订单详情":
+                      item.name=="ViewDatePrice"?"价格日历":
+                      item.name=="PriCalendarSet"?"价格日历设置":
+                      item.name   
+                    }}
                 </router-link>
                 
                 <span v-show="item.name!='主页'" class="tags-li-icon" @click="closeTags(index)"><i class="el-icon-close"></i></span>
@@ -94,7 +101,8 @@ export default {
     },
     watch:{
         $route(newValue, oldValue){
-            if(oldValue.path == '/editHouse' || oldValue.path == '/orderDetails'){
+            var oldPath = ['/editHouse','/orderDetails','/viewDatePrice','/priCalendarSet']
+            if(oldPath.indexOf(oldValue.path)!=-1){
                 for(var i = 0 ; i<this.tagsList.length;i++){
                     if(this.tagsList[i].path == oldValue.path){
                         this.closeTags(i);

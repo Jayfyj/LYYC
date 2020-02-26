@@ -34,7 +34,8 @@
                         unlink-panels
                         @change = "changeDate"
                         range-separator="至"
-                        placeholder="请输入日期"
+                        start-placeholder="开始日期"
+                        end-placeholder="结束日期"
                         :picker-options="pickerOptions">
                     </el-date-picker>
 				</el-form-item>
@@ -260,7 +261,7 @@ export default {
             em = em < 10 ? '0' + em : em;  
             var ed = end.getDate();  
             ed = ed < 10 ? ('0' + ed) : ed;
-            this.queryMap.boeday = start.getFullYear() + '-' + em + '-' + ed;
+            this.queryMap.boeday = end.getFullYear() + '-' + em + '-' + ed;
             console.log(this.queryMap.boeday)
         },
 
@@ -319,13 +320,14 @@ export default {
                 var curtime = this.datetime()
                 console.log(curtime)
                 var data = {
-                    "tid":this.ruleForm.TID,
-                    "pstate": this.ruleForm.PSTATE,
-                    "rmoney":this.ruleForm.RMONEY,
-                    "free":this.ruleForm.FREE,
-                    "rstate":this.ruleForm.RSTATE,
-                    "state":this.ruleForm.STATE,
-                    "cftime":curtime,
+                    "tid":this.ruleForm.TID,            //订单id
+                    "optype": "",                       //操作类型  1:确认订单 2:审核退款
+                    "pstate": this.ruleForm.PSTATE,     //支付状态：0：未支付 1：用户已点击进行支付按钮 2：等待银行确认  100：已支付
+                    "rmoney":this.ruleForm.RMONEY,      //支付类型：1：微信支付 2：支付宝 3：龙支付 4：聚合支付 10：线下支付
+                    "free":this.ruleForm.FREE,          //退款金额
+                    "rstate":this.ruleForm.RSTATE,      //退款手续费
+                    "state":this.ruleForm.STATE,        //退款状态：0：申请中  1：已进行退款 2：审核不通过(不退款)   3：审核通过 4、第三方待退款  5:退款失败  -10:等待处理
+                    "cftime":curtime,                   //订单状态：-1：等待商家确认 0：订单提交成功：不可用 1： 订单交易成功：可用  2：订单已关闭
                 }
                 // console.log(data)
                 var params = {"txcode":"order003","data":data};

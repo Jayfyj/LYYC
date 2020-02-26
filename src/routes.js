@@ -7,12 +7,16 @@ import Home from './views/Home.vue'
 //主页面
 import Main from './views/Main.vue'
 //酒店管理
-import HousingManagement from './views/hotelManagement/housingManagement.vue'       //房型管理
-import AddHouse from './views/hotelManagement/addHouse.vue'                         //添加房型
-import EditHouse from './views/hotelManagement/editHouse.vue'                       //修改房型
-import HouseDetails from './views/hotelManagement/houseDetails.vue'                 //查询房型
-import PriCalManagement from './views/hotelManagement/priCalManagement.vue'         //价格日历管理
-import HotelInfo from './views/hotelManagement/hotelInfo.vue'                       //酒店信息
+import HousingManagement from './views/hotelManagement/house/housingManagement.vue'       //房型管理
+import AddHouse from './views/hotelManagement/house/addHouse.vue'                         //添加房型
+import EditHouse from './views/hotelManagement/house/editHouse.vue'                       //修改房型
+// import HouseDetails from './views/hotelManagement/house/houseDetails.vue'              //查询房型
+import PriCalManagement from './views/hotelManagement/price/priCalManagement.vue'         //价格日历管理
+import ViewDatePrice from './views/hotelManagement/price/viewDatePrice.vue'               //价格日历
+import PriCalendarSet from './views/hotelManagement/price/priCalendarSet.vue'               //价格日历
+
+
+import HotelInfo from './views/hotelManagement/hotel/hotelInfo.vue'                       //酒店信息
 //订单中心
 import OrderManagement from './views/orderCenter/orderManagement.vue'               //订单管理
 import OrderDetails from './views/orderCenter/orderDetails.vue'               //订单详情
@@ -45,11 +49,14 @@ let routes = [
         iconCls: 'el-icon-setting',//图标样式class
         children: [
             { path: '/main', component: Main, name: '主页', hidden: true },
+            { path: '/housingManagement', component: HousingManagement, name: '房型管理' },
             { path: '/addHouse', component: AddHouse, name: '新增房型',hidden: true },
             { path: '/editHouse', component: EditHouse, name: 'EditHouse',hidden: true },
-            { path: '/houseDetails', component: HouseDetails, name: 'HouseDetails',hidden: true },
-            { path: '/housingManagement', component: HousingManagement, name: '房型管理' },
+            // { path: '/houseDetails', component: HouseDetails, name: 'HouseDetails',hidden: true },
             { path: '/priCalManagement', component:PriCalManagement, name: '价格日历管理' },
+            { path: '/viewDatePrice', component:ViewDatePrice, name: 'ViewDatePrice',hidden: true },
+            { path: '/priCalendarSet', component:PriCalendarSet, name: 'PriCalendarSet',hidden: true },
+            
             { path: '/hotelInfo', component: HotelInfo, name: '酒店信息' },
         ]
     },

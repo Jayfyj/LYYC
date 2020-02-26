@@ -14,16 +14,17 @@
                         unlink-panels
                         @change = "changeDate"
                         range-separator="至"
-                        placeholder="请输入日期"
+                        start-placeholder="开始日期"
+                        end-placeholder="结束日期"
                         :picker-options="pickerOptions">
                     </el-date-picker>
 				</el-form-item>
 				<el-form-item>
 					<el-button type="primary" v-on:click="getData">查询</el-button>
 				</el-form-item>
-				<!-- <el-form-item>
+				<el-form-item>
 					<el-button type="primary" @click="handleAdd">新增</el-button>
-				</el-form-item> -->
+				</el-form-item>
 			</el-form>
 		</el-col>
 
@@ -35,15 +36,11 @@
 			</el-table-column> -->
 			<!-- <el-table-column prop="TID" label="唯一标识" width="150"  align='center'>
 			</el-table-column> -->
-            <el-table-column prop="HOTEL_ID" label="酒店id" width="150"  align='center'>
+            <!-- <el-table-column prop="HOTEL_ID" label="酒店id" width="150"  align='center'>
 			</el-table-column>
             <el-table-column prop="ROOMTYPE_ID" label="房型id" width="150"  align='center'>
-			</el-table-column>
+			</el-table-column> -->
             <el-table-column prop="TNAME" label="价格策略名称" width="150"  align='center'>
-			</el-table-column>
-            <el-table-column prop="BDATE" label="开始时间" width="150"  align='center'>
-			</el-table-column>
-			<el-table-column prop="EDATE" label="结束时间" width="150"   align='center'>
 			</el-table-column>
 			<el-table-column prop="PRICE" label="卖价" width="150"   align='center'>
 			</el-table-column>
@@ -51,12 +48,19 @@
 			</el-table-column>
             <el-table-column prop="PRICESHOW" label="门市价" width="150"   align='center'>
 			</el-table-column>
+            <el-table-column prop="BDATE" label="开始时间" width="150"  align='center'>
+			</el-table-column>
+			<el-table-column prop="EDATE" label="结束时间" width="150"   align='center'>
+			</el-table-column>
 			<el-table-column prop="STOCK" label="库存" min-width="150"   align='center'>
 			</el-table-column>
-			<el-table-column label="操作" width="150"  align='center' > 
+			<el-table-column label="操作" width="300"  align='center' > 
 				<template slot-scope="scope">
                     <el-button size="small" @click="handleDetail(scope.$index, scope.row)">详情</el-button>
-					<el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
+                    <el-button size="small" @click="handleStart(scope.$index, scope.row)">启用</el-button>
+                    <el-button size="small" @click="handleForbid(scope.$index, scope.row)">禁用</el-button>
+                    <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+					<!-- <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button> -->
 				</template>
 			</el-table-column>
 		</el-table>
@@ -196,7 +200,7 @@ export default {
             em = em < 10 ? '0' + em : em;  
             var ed = end.getDate();  
             ed = ed < 10 ? ('0' + ed) : ed;
-            this.queryMap.edate = start.getFullYear() + '-' + em + '-' + ed;
+            this.queryMap.edate = end.getFullYear() + '-' + em + '-' + ed;
             console.log(this.queryMap.edate)
         },
 
@@ -204,7 +208,7 @@ export default {
         getData(){
             console.log(this.queryMap)
             this.listLoading = true;
-            var data = {"HOTEL_ID":"575346343687","ROOMTYPE_ID":"","pageSize":this.pageInfo.pageSize,"pageNum":this.pageInfo.page,"queryMap":this.queryMap}
+            var data = {"hotel_id":"575346343687","roomtype_id":"","pageSize":this.pageInfo.pageSize,"pageNum":this.pageInfo.page,"queryMap":this.queryMap}
             var params = {"txcode":"price000","data":data};
             this.ajax("get",params,(res) => {
                 console.log(res.data)
@@ -238,10 +242,31 @@ export default {
         },
 
         
-        //查看详情
+        //查看价格
         handleDetail(index, row){
-            this.$router.push({name:"OrderDetails",params:{'order':row}});
+            this.$router.push({name:"ViewDatePrice",params:{'priceOBJ':row}});
         },
+
+        //显示新增界面
+        handleAdd: function () {
+            this.$router.push({path:"/priCalendarSet"});
+        },
+
+        //启用按钮
+        handleStart(index,row){
+
+        },
+
+        //禁用按钮
+        handleForbid(index,row){
+
+        },
+
+        //编辑按钮
+        handleEdit(index,row){
+
+        },
+
 
 
         selsChange: function (sels) {
