@@ -1,0 +1,23 @@
+{
+	"chn_no" : "21",
+	"gtype" : "20",
+	"gtid" : "", 
+	"token" : "",
+	"txcode" : "price004",
+	"txtime" : "",
+	"ret_code":"200",
+	"ret_msg":"查询成功",
+    "data": {
+        "TID":"t001",	
+        "TNAME":"123",
+        "HOTEL_ID":"123",	
+        "ROOMTYPE_ID":"123",	
+        "BDATE":"2020-12-01",		
+        "EDATE":"2020-12-01",		
+        "PRICE":"123",		
+        "COST":"123",	
+        "PRICESHOW":"123",	
+        "STOCK":"123",
+        "VALID": "1"
+	}
+}

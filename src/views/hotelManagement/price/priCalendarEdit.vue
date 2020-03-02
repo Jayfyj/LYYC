@@ -1,7 +1,7 @@
 <template>
     <div>
         <div style="width:100%;">
-            <h2  style="width:100%;margin-left:1%">添加日历价格</h2>
+            <h2  style="width:100%;margin-left:1%">修改日历价格</h2>
         </div>
         <div style="width:100%;height:10px;background:#f2f2f2;">
         </div>
@@ -171,18 +171,18 @@ export default {
                     }).then(() => {
                         this.changeDate(this.ruleForm)
                         this.ruleForm = this.UpperToLower(this.ruleForm)
-                        var params = {"txcode":"price002","data":this.ruleForm};
+                        var params = {"txcode":"price004","data":this.ruleForm};
                         this.ajax("get",params,(res) => {
                             if(res.data.ret_code == "200"){
                                 console.log(this.ruleForm)
                                 this.$message({
                                     type: 'success',
-                                    message: '添加成功!'
+                                    message: '修改成功!'
                                 });     
                             }else{
                                 this.$message({
                                     type: 'info',
-                                    message: '添加失败!'
+                                    message: '修改失败!'
                                 });    
                             }
                         },(err) => {console.log(err,"错误提示")},this.testURL);
@@ -221,9 +221,33 @@ export default {
             obj.EDATE = end.getFullYear() + '-' + em + '-' + ed;
         },
 
+        //设置请求
+        getData(data){
+            var params = {"txcode":"price004","data":{"tid":data.TID}};
+            this.ajax("get",params,(res) => {
+                
+                if(res.data.ret_code == "200"){
+                    // console.log(res.data.data)
+                    var oldParams = this.ruleForm;
+                    var ajaxParams = res.data.data;
+                    var newParams = {};
+                    //合并
+                    Object.assign(newParams,oldParams,ajaxParams);
+                    this.ruleForm = newParams;
+                    console.log(this.ruleForm)
+                }else{
+                    this.$message({
+                        type: 'info',
+                        message: '设置失败!'
+                    });   
+                }
+            },(err) => {console.log(err,"错误提示")},this.testURL);
+        },
+        
     },
     mounted(){
-       
+        // console.log(this.ruleForm)
+        this.getData(this.$route.params.priceOBJ)
     }
 }
 </script>

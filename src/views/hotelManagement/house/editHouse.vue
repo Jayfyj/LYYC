@@ -254,6 +254,11 @@
                                 type: 'success',
                                 message: '修改成功!'
                             });     
+                        }else{
+                            this.$message({
+                                type: 'info',
+                                message: '修改失败!'
+                            });    
                         }
                     },(err) => {console.log(err,"错误提示")},this.testURL);
                 }).catch(() => {

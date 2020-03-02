@@ -264,7 +264,7 @@ export default {
 
         //编辑按钮
         handleEdit(index,row){
-
+            this.$router.push({name:"PriCalendarEdit",params:{'priceOBJ':row}});
         },
 
 

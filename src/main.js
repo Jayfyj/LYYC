@@ -63,6 +63,21 @@ router.beforeEach((to, from, next) => {
   }
 })
 
+
+import AMap from 'vue-amap';
+Vue.use(AMap);
+
+  // 初始化vue-amap
+AMap.initAMapApiLoader({
+  // 高德key
+  key: '4365df5e295713cc4d8dcbdcef934a0f',
+  // 插件集合 （插件按需引入）
+  // plugin: ['AMap.Geolocation']
+  plugin: ['AMap.Geocoder','AMap.Geolocation','AMap.Autocomplete', 'AMap.PlaceSearch', 'AMap.Scale', 'AMap.OverView', 'AMap.ToolBar', 'AMap.MapType', 'AMap.PolyEditor', 'AMap.CircleEditor']
+});
+
+
+
 //router.afterEach(transition => {
 //NProgress.done();
 //});

@@ -8,7 +8,7 @@
                       item.name=="HouseDetails"?"查询房型":
                       item.name=="OrderDetails"?"订单详情":
                       item.name=="ViewDatePrice"?"价格日历":
-                      item.name=="PriCalendarSet"?"价格日历设置":
+                      item.name=="PriCalendarEdit"?"修改价格日历":
                       item.name   
                     }}
                 </router-link>
@@ -101,7 +101,7 @@ export default {
     },
     watch:{
         $route(newValue, oldValue){
-            var oldPath = ['/editHouse','/orderDetails','/viewDatePrice','/priCalendarSet']
+            var oldPath = ['/editHouse','/orderDetails','/viewDatePrice',"/priCalendarEdit"]
             if(oldPath.indexOf(oldValue.path)!=-1){
                 for(var i = 0 ; i<this.tagsList.length;i++){
                     if(this.tagsList[i].path == oldValue.path){

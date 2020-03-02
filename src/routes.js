@@ -13,7 +13,8 @@ import EditHouse from './views/hotelManagement/house/editHouse.vue'             
 // import HouseDetails from './views/hotelManagement/house/houseDetails.vue'              //查询房型
 import PriCalManagement from './views/hotelManagement/price/priCalManagement.vue'         //价格日历管理
 import ViewDatePrice from './views/hotelManagement/price/viewDatePrice.vue'               //价格日历
-import PriCalendarSet from './views/hotelManagement/price/priCalendarSet.vue'               //价格日历
+import PriCalendarSet from './views/hotelManagement/price/priCalendarSet.vue'             //添加价格日历
+import PriCalendarEdit from './views/hotelManagement/price/priCalendarEdit.vue'           //修改价格日历
 
 
 import HotelInfo from './views/hotelManagement/hotel/hotelInfo.vue'                       //酒店信息
@@ -26,6 +27,7 @@ import ScenicApplication from './views/approvalManagement/scenicApplication.vue'
 import SalesReport from './views/reportStatistics/salesReport.vue'                  //销售报表
 
 // import echarts from './views/charts/echarts.vue'
+import test from './views/test/test.vue'
 
 let routes = [
     {
@@ -55,7 +57,8 @@ let routes = [
             // { path: '/houseDetails', component: HouseDetails, name: 'HouseDetails',hidden: true },
             { path: '/priCalManagement', component:PriCalManagement, name: '价格日历管理' },
             { path: '/viewDatePrice', component:ViewDatePrice, name: 'ViewDatePrice',hidden: true },
-            { path: '/priCalendarSet', component:PriCalendarSet, name: 'PriCalendarSet',hidden: true },
+            { path: '/priCalendarSet', component:PriCalendarSet, name: '添加价格日历',hidden: true },
+            { path: '/priCalendarEdit', component:PriCalendarEdit, name: 'PriCalendarEdit',hidden: true },
             
             { path: '/hotelInfo', component: HotelInfo, name: '酒店信息' },
         ]
@@ -90,7 +93,16 @@ let routes = [
             { path: '/salesReport', component: SalesReport, name: '销售报表' }
         ]
     },
-    
+    {
+        path: '/',
+        component: Home,
+        name: '测试',
+        iconCls: 'el-icon-setting',
+        // leaf: true,//只有一个节点
+        children: [
+            { path: '/test', component: test, name: '测试' }
+        ]
+    },
     // {
     //     path: '/',
     //     component: Home,
