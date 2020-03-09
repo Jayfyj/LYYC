@@ -1,0 +1,26 @@
+{
+	"chn_no" : "21",	
+	"gtype" : "20",      
+	"gtid" : "",      
+	"token" : "",
+	"txcode" : "price000",	
+	"txtime" : "",	
+	"ret_code" :"200",
+	"ret_msg":"查询成功", 
+    "data": {
+		"list" : [{
+			"TID":"t001",
+			"TNAME":"标准间",
+			"HOTEL_ID":"h001",
+			"ROOMTYPE_ID":"r001",
+			"BDATE":"2020-02-02",
+			"EDATE":"2020-02-02",
+			"PRICE":"328",
+			"COST":"328",
+			"PRICESHOW":"328",
+			"STOCK":"328"
+        }],
+        "totalNum":"289"
+	}
+}
+
